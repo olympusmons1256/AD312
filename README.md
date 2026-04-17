@@ -34,3 +34,22 @@ It so far demonstrates:
 
 ---
 
+### Task Manager
+- `TaskManager` stores tasks as an array of objects with `id`, `title`, and `completed`.
+- New tasks are added immutably using array spread.
+- Task completion is toggled immutably using `.map()` and object spread.
+
+#### Test Cases
+
+##### Normal cases (3)
+- Adding a task with text creates a new task with Pending status.
+- Adding multiple tasks keeps previously added tasks and appends new ones.
+- Clicking Mark Complete on a Pending task changes it to Completed.
+
+##### Edge cases (3)
+- Clicking Add Task with an empty or whitespace-only title does not add a task.
+- Toggling the same task repeatedly flips between Completed and Pending each time.
+- Toggling one task does not change the completion state of other tasks.
+
+---
+
