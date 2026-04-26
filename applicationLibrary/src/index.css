@@ -169,6 +169,71 @@ button:disabled {
   margin: 8px 0;
 }
 
+.immer-profile-card {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 24px;
+}
+
+.immer-profile-card h2 {
+  margin: 0 0 16px;
+}
+
+.immer-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.immer-profile-grid label {
+  display: grid;
+  gap: 6px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.immer-profile-grid .span-2 {
+  grid-column: span 2;
+}
+
+.immer-profile-grid input {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.immer-profile-grid input:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #60a5fa;
+}
+
+.immer-profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.newsletter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.immer-profile-preview {
+  margin: 0;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  color: #111827;
+  overflow-x: auto;
+}
+
 .task-card {
   border-top: 1px solid #e5e7eb;
   padding-top: 24px;

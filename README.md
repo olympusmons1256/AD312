@@ -6,6 +6,7 @@ It so far demonstrates:
 - state updates and snapshot behavior (`Counter`)
 - index-based image navigation with boundary checks (`Gallery`)
 - immutable nested object updates (`UserProfile`)
+- complex nested profile updates using `useImmer` (`UserProfileWithImmer`)
 - complex immutable updates using `useImmer` (`ShoppingListWithImmer`)
 
 ---
@@ -71,6 +72,26 @@ It so far demonstrates:
 - Clicking `Add Item` with an empty or whitespace-only name does not create a new item.
 - Clicking `Remove` on an item deletes it from the list without affecting remaining items.
 - Attempting to update note with an empty input stores an empty note and UI still renders safely.
+
+---
+
+### User Profile with Immer
+- `UserProfileWithImmer` uses `useImmer` to manage nested `contactDetails` and `preferences`.
+- `updateContactDetails` directly updates `phone` and `address` on the draft state.
+- `toggleNewsletterSubscription` flips the nested `preferences.newsletter` boolean.
+- The profile is displayed as formatted JSON so updates can be verified in real time.
+
+#### Test Cases
+
+##### Normal cases (3)
+- Editing name, phone, and address then clicking `Apply Profile Updates` updates those fields in the preview.
+- Clicking the newsletter checkbox once toggles `preferences.newsletter` from true to false (or false to true).
+- Updating contact details multiple times keeps only the latest values in state.
+
+##### Edge cases (3)
+- Entering a blank name and applying updates preserves the previous non-empty name.
+- Entering blank phone/address values applies safely and the component continues rendering without errors.
+- Rapidly toggling newsletter repeatedly always flips the boolean correctly and remains in sync with the checkbox.
 
 ---
 
