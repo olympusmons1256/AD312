@@ -229,3 +229,85 @@ button:disabled {
   text-decoration: line-through;
   color: #6b7280;
 }
+
+.shopping-card {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 24px;
+}
+
+.shopping-card h2 {
+  margin: 0 0 16px;
+}
+
+.shopping-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.shopping-form-grid input {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.shopping-form-grid input:focus,
+.shopping-actions input:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #60a5fa;
+}
+
+.shopping-empty {
+  margin: 0;
+  color: #4b5563;
+}
+
+.shopping-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.shopping-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f8fafc;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.shopping-item-title {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.shopping-item-meta {
+  margin: 0;
+  color: #4b5563;
+}
+
+.shopping-actions {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 8px;
+}
+
+.shopping-actions input {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.danger-btn {
+  background: #dc2626;
+}
+
+.danger-btn:hover {
+  opacity: 0.9;
+}

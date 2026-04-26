@@ -6,6 +6,7 @@ It so far demonstrates:
 - state updates and snapshot behavior (`Counter`)
 - index-based image navigation with boundary checks (`Gallery`)
 - immutable nested object updates (`UserProfile`)
+- complex immutable updates using `useImmer` (`ShoppingListWithImmer`)
 
 ---
 
@@ -50,6 +51,26 @@ It so far demonstrates:
 - Clicking Add Task with an empty or whitespace-only title does not add a task.
 - Toggling the same task repeatedly flips between Completed and Pending each time.
 - Toggling one task does not change the completion state of other tasks.
+
+---
+
+### Shopping List with Immer
+- `ShoppingListWithImmer` uses `useImmer` to manage an array of shopping items with nested `details`.
+- `addItem` adds a new item by pushing to the draft state.
+- `updateItem` updates top-level fields (like `quantity`) and nested fields (like `details.notes`) directly on the draft.
+- `removeItem` removes items by id using draft index lookup and `splice`.
+
+#### Test Cases
+
+##### Normal cases (3)
+- Adding a valid item name, quantity, category, and notes creates a new list item immediately.
+- Clicking `+1 Qty` on an item increases only that item's quantity by exactly 1.
+- Entering a new note and clicking `Update Note` updates that item’s nested `details.notes` in real time.
+
+##### Edge cases (3)
+- Clicking `Add Item` with an empty or whitespace-only name does not create a new item.
+- Clicking `Remove` on an item deletes it from the list without affecting remaining items.
+- Attempting to update note with an empty input stores an empty note and UI still renders safely.
 
 ---
 
