@@ -59,7 +59,10 @@ function DogQueryExplorer() {
   const groupItems = (groupsQuery.data?.data ?? []).map((group) => ({
     id: group.id,
     name: group.attributes?.name ?? 'Unknown group',
-    purpose: group.attributes?.purpose ?? group.attributes?.description ?? 'No details available.'
+    details:
+      group.attributes?.purpose ??
+      group.attributes?.description ??
+      `${group.relationships?.breeds?.data?.length ?? 0} breeds listed in this group.`
   }))
 
   return (
@@ -151,7 +154,7 @@ function DogQueryExplorer() {
           <ul className="dog-list">
             {groupItems.map((group) => (
               <li key={group.id}>
-                <strong>{group.name}:</strong> {group.purpose}
+                <strong>{group.name}:</strong> {group.details}
               </li>
             ))}
           </ul>
