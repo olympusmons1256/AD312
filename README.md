@@ -8,6 +8,7 @@ It so far demonstrates:
 - immutable nested object updates (`UserProfile`)
 - complex nested profile updates using `useImmer` (`UserProfileWithImmer`)
 - complex immutable updates using `useImmer` (`ShoppingListWithImmer`)
+- asynchronous API data fetching and caching with TanStack Query (`DogQueryExplorer`)
 
 ---
 
@@ -92,6 +93,25 @@ It so far demonstrates:
 - Entering a blank name and applying updates preserves the previous non-empty name.
 - Entering blank phone/address values applies safely and the component continues rendering without errors.
 - Rapidly toggling newsletter repeatedly always flips the boolean correctly and remains in sync with the checkbox.
+
+---
+
+### Dog API Explorer with TanStack Query
+- `DogQueryExplorer` uses TanStack Query (`useQuery`) to fetch and cache data from Dog API endpoints.
+- The module handles `isPending`, `isError`, and `isSuccess` states for breeds, breed details, facts, and groups.
+- The selected breed drives a detail request (`/breeds/{id}`) and displays structured attributes.
+
+#### Test Cases
+
+##### Normal cases (3)
+- On initial load, breeds are fetched and rendered, and a default breed is selected for detail display.
+- Selecting a different breed from the dropdown fetches and shows that breed’s details (name, description, life, weight).
+- Facts and groups sections load and render list items when their requests succeed.
+
+##### Edge cases (3)
+- While data is loading, each section displays a clear loading message and does not crash.
+- If any endpoint fails, the related section shows an error message and other successful sections still render.
+- If optional attributes are missing in API data, fallback text like `N/A` or `No description available.` is shown safely.
 
 ---
 
