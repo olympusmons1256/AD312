@@ -9,6 +9,7 @@ It so far demonstrates:
 - complex nested profile updates using `useImmer` (`UserProfileWithImmer`)
 - complex immutable updates using `useImmer` (`ShoppingListWithImmer`)
 - asynchronous API data fetching and caching with TanStack Query (`DogQueryExplorer`)
+- full CRUD server-state management with TanStack Query (`ManagingBlogPostTanStack`)
 
 ---
 
@@ -112,6 +113,25 @@ It so far demonstrates:
 - While data is loading, each section displays a clear loading message and does not crash.
 - If any endpoint fails, the related section shows an error message and other successful sections still render.
 - If optional attributes are missing in API data, fallback text like `N/A` or `No description available.` is shown safely.
+
+---
+
+### Managing Blog Posts with TanStack Query (CRUD)
+- `ManagingBlogPostTanStack` uses TanStack Query query/mutation hooks to perform `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` on JSONPlaceholder posts.
+- The module supports filtering posts by `userId` and updates cached list data after mutations for responsive UI behavior.
+- Mutation forms are split by action (create, replace, patch title, delete) to clearly demonstrate each HTTP method.
+
+#### Test Cases
+
+##### Normal cases (3)
+- Fetching posts loads and displays a list of posts successfully (`GET`).
+- Submitting the create form adds a new post entry to the displayed list (`POST`).
+- Updating a post with full replacement (`PUT`) and title-only update (`PATCH`) reflects changed values in the UI.
+
+##### Edge cases (3)
+- Applying a user filter with no matching records renders an empty/small list without crashing.
+- Submitting mutation forms with missing required inputs does not send invalid requests.
+- Deleting a post removes only the targeted post while leaving all other posts unchanged.
 
 ---
 

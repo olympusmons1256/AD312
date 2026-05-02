@@ -5,13 +5,14 @@ import TaskManager from './TaskManager'
 import ShoppingListWithImmer from './ShoppingListWithImmer'
 import UserProfileWithImmer from './UserProfileWithImmer'
 import DogQueryExplorer from './DogQueryExplorer'
+import CrudQueryExplorer from './ManagingBlogPostTanStack'
 
 function App() {
   return (
     <main className="app-shell">
       <h1>React State Dashboard</h1>
       <p className="subtitle">
-        Explore state snapshots, asynchronous updates, image navigation, nested objects, task arrays, Immer-based nested updates, and TanStack Query.
+        Explore state snapshots, async updates, nested state, Immer, TanStack Query reads, and full CRUD mutations.
       </p>
       <div className="section-stack">
         <Counter />
@@ -21,6 +22,7 @@ function App() {
         <TaskManager />
         <ShoppingListWithImmer />
         <DogQueryExplorer />
+        <CrudQueryExplorer />
       </div>
     </main>
   )

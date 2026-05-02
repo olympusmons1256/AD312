@@ -445,3 +445,82 @@ button:disabled {
 .details-panel p {
   margin: 0;
 }
+
+.crud-query-card {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 24px;
+}
+
+.crud-query-card h2 {
+  margin: 0 0 16px;
+}
+
+.crud-block {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  margin-bottom: 12px;
+}
+
+.crud-block h3 {
+  margin: 0 0 10px;
+}
+
+.crud-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 8px;
+}
+
+.crud-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.crud-row input,
+.crud-grid input {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.crud-row input:focus,
+.crud-grid input:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #60a5fa;
+}
+
+.crud-note {
+  margin: 8px 0 0;
+  color: #4b5563;
+}
+
+.crud-post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.crud-post-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.crud-post-title {
+  margin: 0;
+  font-weight: 700;
+}
+
+.crud-post-body {
+  margin: 0;
+  color: #374151;
+}
