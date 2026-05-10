@@ -10,6 +10,7 @@ It so far demonstrates:
 - complex immutable updates using `useImmer` (`ShoppingListWithImmer`)
 - asynchronous API data fetching and caching with TanStack Query (`DogQueryExplorer`)
 - full CRUD server-state management with TanStack Query (`ManagingBlogPostTanStack`)
+- multi-page routing with React Router, persistent layout via `<Outlet />`, dynamic routes, and programmatic navigation (`Blog App`)
 
 ---
 
@@ -132,6 +133,26 @@ It so far demonstrates:
 - Applying a user filter with no matching records renders an empty/small list without crashing.
 - Submitting mutation forms with missing required inputs does not send invalid requests.
 - Deleting a post removes only the targeted post while leaving all other posts unchanged.
+
+---
+
+### Blog App with React Router
+- The Blog App uses `react-router-dom` with nested routes under `/blog`, rendered inside a persistent `BlogLayout` shell via `<Outlet />`.
+- `BlogHome` maps over a local `posts.js` data source and renders each post title as a `<Link>` to its dynamic route.
+- `BlogPostView` uses `useParams()` to extract the post ID from the URL and `.find()` to locate the matching post, and `useNavigate()` to power the "Return to Feed" button.
+- Invalid post IDs (e.g. `/blog/post/999`) are handled gracefully with a "Post Not Found" message instead of crashing.
+
+#### Test Cases
+
+##### Normal cases (3)
+- Navigating to `/blog` renders the Home feed listing all three post titles as clickable links.
+- Clicking a post title navigates to `/blog/post/{id}` and displays that post's full title and content.
+- Navigating to `/blog/about` renders the About page with descriptive content about the blog.
+
+##### Edge cases (3)
+- Visiting `/blog/post/999` (a non-existent ID) shows a "Post Not Found" message and a button to return to the feed without crashing.
+- Visiting `/blog/post/abc` (a non-numeric ID) also shows the "Post Not Found" fallback since `Number("abc")` returns `NaN` and `.find()` returns `undefined`.
+- Clicking "← Return to Feed" from a post view navigates back to `/blog` using `useNavigate()` without triggering a full page reload.
 
 ---
 
