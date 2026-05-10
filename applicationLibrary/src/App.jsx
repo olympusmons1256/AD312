@@ -34,8 +34,8 @@ function Dashboard() {
         <CrudQueryExplorer />
       </div>
       <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <Link to="/blog" className="blog-entry-link">📝 Open Blog App →</Link>
-        <Link to="/recipes" className="blog-entry-link">🍽️ Open Recipe Gallery →</Link>
+        <Link to="/blog" className="blog-entry-link">Open Blog App →</Link>
+        <Link to="/recipes" className="blog-entry-link">Open Recipe Gallery →</Link>
       </div>
     </main>
   )
