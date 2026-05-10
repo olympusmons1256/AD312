@@ -11,6 +11,7 @@ It so far demonstrates:
 - asynchronous API data fetching and caching with TanStack Query (`DogQueryExplorer`)
 - full CRUD server-state management with TanStack Query (`ManagingBlogPostTanStack`)
 - multi-page routing with React Router, persistent layout via `<Outlet />`, dynamic routes, and programmatic navigation (`Blog App`)
+- file-based style routing with React Router, dynamic recipe detail pages via `useParams`, and a persistent nav layout (`Recipe Gallery`)
 
 ---
 
@@ -153,6 +154,27 @@ It so far demonstrates:
 - Visiting `/blog/post/999` (a non-existent ID) shows a "Post Not Found" message and a button to return to the feed without crashing.
 - Visiting `/blog/post/abc` (a non-numeric ID) also shows the "Post Not Found" fallback since `Number("abc")` returns `NaN` and `.find()` returns `undefined`.
 - Clicking "← Return to Feed" from a post view navigates back to `/blog` using `useNavigate()` without triggering a full page reload.
+
+---
+
+### Recipe Gallery with React Router
+- The Recipe Gallery uses nested routes under `/recipes` with a persistent `RecipeLayout` nav shell and `<Outlet />` for child content.
+- `RecipeGallery` renders all recipes as clickable image thumbnails using `<Link to="/recipes/recipe/{id}">` — replacing the old previous/next button approach.
+- `RecipeDetail` uses `useParams()` to extract the recipe `id` from the URL and `.find()` to locate the matching recipe object from the data source.
+- Each detail page displays the recipe image, title, description, and full numbered cooking instructions.
+- Invalid or non-existent recipe IDs are handled with a "Recipe Not Found" fallback page.
+
+#### Test Cases
+
+##### Normal cases (3)
+- Navigating to `/recipes/gallery` renders all four recipe thumbnails with titles as clickable links.
+- Clicking a recipe thumbnail navigates to `/recipes/recipe/{id}` and displays that recipe's image, title, and cooking instructions.
+- Clicking "← Back to Gallery" from a recipe detail page returns the user to the gallery grid.
+
+##### Edge cases (3)
+- Visiting `/recipes/recipe/999` (a non-existent ID) shows a "Recipe Not Found" message with a back button and does not crash.
+- Visiting `/recipes/recipe/abc` (a non-numeric ID) shows the "Recipe Not Found" fallback since `Number("abc")` is `NaN` and `.find()` returns `undefined`.
+- Navigating directly to `/recipes` renders the Home welcome page with a "Browse Recipes →" link, confirming the index route is correctly configured.
 
 ---
 

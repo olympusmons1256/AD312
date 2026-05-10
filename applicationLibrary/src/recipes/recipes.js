@@ -1,0 +1,58 @@
+export const recipes = [
+  {
+    id: 1,
+    title: 'Wood-Fired Margherita Pizza',
+    url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80',
+    description: 'Wood-fired Margherita pizza with fresh basil and mozzarella.',
+    instructions: [
+      'Preheat your oven to 500°F (260°C) with a pizza stone inside.',
+      'Stretch the dough into a 12-inch round on a floured surface.',
+      'Spread a thin layer of San Marzano tomato sauce over the base.',
+      'Tear fresh mozzarella and distribute evenly over the sauce.',
+      'Slide onto the hot stone and bake 8–10 minutes until crust is charred and cheese is bubbling.',
+      'Remove from oven, top with fresh basil leaves and a drizzle of olive oil. Serve immediately.',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Avocado Toast with Poached Egg',
+    url: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=1200&q=80',
+    description: 'Avocado toast topped with poached egg and chili flakes.',
+    instructions: [
+      'Toast a thick slice of sourdough bread until golden and crisp.',
+      'Halve and pit a ripe avocado. Scoop into a bowl and mash with a fork.',
+      'Season mashed avocado with salt, pepper, and a squeeze of lemon juice.',
+      'Bring a shallow pan of water to a gentle simmer. Add a splash of vinegar.',
+      'Crack an egg into a small cup, swirl the water, then gently slide the egg in. Poach 3 minutes.',
+      'Spread avocado on toast, top with the poached egg, and finish with chili flakes and flaky salt.',
+    ],
+  },
+  {
+    id: 3,
+    title: 'Colorful Garden Salad',
+    url: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80',
+    description: 'Colorful garden salad with citrus dressing.',
+    instructions: [
+      'Wash and dry mixed greens (spinach, arugula, romaine).',
+      'Slice cherry tomatoes, cucumber, red onion, and radishes.',
+      'Segment one orange and one grapefruit over the bowl to catch the juice.',
+      'Whisk together 3 tbsp olive oil, 2 tbsp citrus juice, 1 tsp honey, salt and pepper.',
+      'Toss salad ingredients with the dressing just before serving.',
+      'Top with toasted sunflower seeds and a sprinkle of feta cheese.',
+    ],
+  },
+  {
+    id: 4,
+    title: 'Creamy Mushroom Pasta',
+    url: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1200&q=80',
+    description: 'Creamy mushroom pasta finished with parmesan and herbs.',
+    instructions: [
+      'Cook 300g fettuccine in salted boiling water until al dente. Reserve 1 cup pasta water.',
+      'Slice 400g mixed mushrooms (cremini, shiitake, oyster).',
+      'Heat butter in a large pan over medium-high heat. Sauté mushrooms until golden, 6–8 minutes.',
+      'Add 3 cloves minced garlic and cook 1 minute. Deglaze with a splash of white wine.',
+      'Stir in 200ml heavy cream and a handful of grated parmesan. Simmer until slightly thickened.',
+      'Add pasta to the sauce, tossing with pasta water to loosen. Finish with fresh thyme and cracked pepper.',
+    ],
+  },
+]

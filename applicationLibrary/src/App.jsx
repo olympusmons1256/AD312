@@ -11,6 +11,10 @@ import BlogLayout from './blog/BlogLayout'
 import BlogHome from './blog/BlogHome'
 import BlogAbout from './blog/BlogAbout'
 import BlogPostView from './blog/BlogPostView'
+import RecipeLayout from './recipes/RecipeLayout'
+import RecipeHome from './recipes/RecipeHome'
+import RecipeGallery from './recipes/RecipeGallery'
+import RecipeDetail from './recipes/RecipeDetail'
 
 function Dashboard() {
   return (
@@ -29,8 +33,9 @@ function Dashboard() {
         <DogQueryExplorer />
         <CrudQueryExplorer />
       </div>
-      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+      <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         <Link to="/blog" className="blog-entry-link">📝 Open Blog App →</Link>
+        <Link to="/recipes" className="blog-entry-link">🍽️ Open Recipe Gallery →</Link>
       </div>
     </main>
   )
@@ -44,6 +49,11 @@ function App() {
         <Route index element={<BlogHome />} />
         <Route path="about" element={<BlogAbout />} />
         <Route path="post/:postId" element={<BlogPostView />} />
+      </Route>
+      <Route path="/recipes" element={<RecipeLayout />}>
+        <Route index element={<RecipeHome />} />
+        <Route path="gallery" element={<RecipeGallery />} />
+        <Route path="recipe/:id" element={<RecipeDetail />} />
       </Route>
     </Routes>
   )
