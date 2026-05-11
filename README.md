@@ -13,6 +13,11 @@ It so far demonstrates:
 - multi-page routing with React Router, persistent layout via `<Outlet />`, dynamic routes, and programmatic navigation (`Blog App`)
 - file-based style routing with React Router, dynamic recipe detail pages via `useParams`, and a persistent nav layout (`Recipe Gallery`)
 
+Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHealthRecordSymmetric):
+- `isHealthRecordSymmetric` checks whether a singly linked list of patient health metrics forms a palindrome.
+- Uses slow/fast pointer midpoint detection and in-place second-half reversal for O(n) time and O(1) space.
+- The list is restored to its original order after the check.
+
 ---
 
 ## Run the app
@@ -178,3 +183,45 @@ It so far demonstrates:
 
 ---
 
+### isHealthRecordSymmetric (Code-Interview)
+
+**Problem:** Given a singly linked list of patient health metrics, determine whether the sequence is a palindrome (reads the same forwards and backwards).
+
+**Clarifying Questions:**
+- Q1: Can the list be empty? = Yes. An empty list (`head = None`) is considered symmetric (trivially).
+
+- Q2: Can the list have a single node? = Yes. A single-node list is always symmetric.
+
+- Q3: Are values integers, floats, or strings? = Integers or floats for health metrics. Comparison uses `==`.
+
+- Q4: Should the original list structure be preserved after the check? = Yes — the list is restored after comparison.
+
+- Q5: Can there be negative values? = Yes (e.g., temperature deltas). The algorithm is value-agnostic.
+
+**Algorithm — Two-Pointer + In-Place Reversal:**
+1. Use slow/fast pointers to find the midpoint of the list.
+
+2. Reverse the second half of the list in-place.
+
+3. Walk both halves simultaneously, comparing values node by node.
+
+4. Restore the list to its original order.
+
+5. Return `True` if all values matched, `False` otherwise.
+
+**Complexity:**
+- Time: O(n) — three linear passes (find midpoint, reverse, compare)
+- Space: O(1) — no extra data structures; reversal is performed in-place
+
+
+##### Normal cases (3)
+- An even-length palindrome list `[90, 85, 85, 90]` returns `True`.
+- An odd-length palindrome list `[70, 80, 90, 80, 70]` returns `True`.
+- A non-symmetric list `[100, 95, 90, 85]` returns `False`.
+
+##### Edge cases (3)
+- An empty list (`None` head) returns `True` — trivially symmetric.
+- A single-node list returns `True` — one value is always a palindrome.
+- Two different values `[75, 80]` returns `False`; two equal values `[75, 75]` returns `True`.
+
+---
