@@ -1,34 +1,18 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { UserContext } from './UserContext'
 
 function UserProfile() {
-  const [userProfile, setUserProfile] = useState({
-    name: 'Reid Torres',
-    email: 'reid.torres@example.com',
-    address: {
-      street: '123 Maple Street',
-      city: 'Austin',
-      country: 'USA'
-    }
-  })
+  // Reads user data directly from context — no props drilled down from App or Dashboard
+  const { user, updateUser } = useContext(UserContext)
 
-  const [streetInput, setStreetInput] = useState(userProfile.address.street)
-  const [cityInput, setCityInput] = useState(userProfile.address.city)
-  const [countryInput, setCountryInput] = useState(userProfile.address.country)
-
-  const updateAddress = (street, city, country) => {
-    setUserProfile((prevProfile) => ({
-      ...prevProfile,
-      address: {
-        ...prevProfile.address,
-        street,
-        city,
-        country
-      }
-    }))
-  }
+  const [streetInput, setStreetInput] = useState(user.address?.street ?? '')
+  const [cityInput, setCityInput] = useState(user.address?.city ?? '')
+  const [countryInput, setCountryInput] = useState(user.address?.country ?? '')
 
   const handleUpdateAddress = () => {
-    updateAddress(streetInput, cityInput, countryInput)
+    updateUser({
+      address: { street: streetInput, city: cityInput, country: countryInput }
+    })
   }
 
   return (
@@ -73,19 +57,19 @@ function UserProfile() {
 
       <div className="profile-summary">
         <p>
-          <strong>Name:</strong> {userProfile.name}
+          <strong>Name:</strong> {user.name}
         </p>
         <p>
-          <strong>Email:</strong> {userProfile.email}
+          <strong>Email:</strong> {user.email}
         </p>
         <p>
-          <strong>Street:</strong> {userProfile.address.street}
+          <strong>Street:</strong> {user.address?.street}
         </p>
         <p>
-          <strong>City:</strong> {userProfile.address.city}
+          <strong>City:</strong> {user.address?.city}
         </p>
         <p>
-          <strong>Country:</strong> {userProfile.address.country}
+          <strong>Country:</strong> {user.address?.country}
         </p>
       </div>
     </section>

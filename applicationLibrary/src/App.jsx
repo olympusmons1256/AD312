@@ -18,6 +18,7 @@ import RecipeGallery from './recipes/RecipeGallery'
 import RecipeDetail from './recipes/RecipeDetail'
 import ThemeSwitcher from './ThemeSwitcher'
 import { ThemeContext } from './ThemeContext'
+import { UserProvider } from './UserContext'
 
 function Dashboard() {
   const { theme, themeValues } = useContext(ThemeContext)
@@ -60,7 +61,7 @@ function Dashboard() {
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<UserProvider><Dashboard /></UserProvider>} />
       <Route path="/blog" element={<BlogLayout />}>
         <Route index element={<BlogHome />} />
         <Route path="about" element={<BlogAbout />} />
