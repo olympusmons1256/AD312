@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import Counter from './Counter'
 import Gallery from './Gallery'
@@ -15,12 +16,27 @@ import RecipeLayout from './recipes/RecipeLayout'
 import RecipeHome from './recipes/RecipeHome'
 import RecipeGallery from './recipes/RecipeGallery'
 import RecipeDetail from './recipes/RecipeDetail'
+import ThemeSwitcher from './ThemeSwitcher'
+import { ThemeContext } from './ThemeContext'
 
 function Dashboard() {
+  const { theme, themeValues } = useContext(ThemeContext)
   return (
-    <main className="app-shell">
+    <main
+      className={`app-shell ${theme === 'dark' ? 'dark-mode' : 'light-mode'}`}
+      style={{
+        background: themeValues.surface,
+        color: themeValues.text,
+        border: `1px solid ${themeValues.border}`,
+        transition: 'background 0.3s ease, color 0.3s ease',
+        position: 'relative',
+      }}
+    >
+      <div style={{ position: 'absolute', top: '20px', right: '20px' }}>
+        <ThemeSwitcher />
+      </div>
       <h1>React State Dashboard</h1>
-      <p className="subtitle">
+      <p className="subtitle" style={{ color: themeValues.subtext }}>
         Explore state snapshots, async updates, nested state, Immer, TanStack Query reads, and full CRUD mutations.
       </p>
       <div className="section-stack">
