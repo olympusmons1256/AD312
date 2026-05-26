@@ -19,6 +19,7 @@ import RecipeDetail from './recipes/RecipeDetail'
 import ThemeSwitcher from './ThemeSwitcher'
 import { ThemeContext } from './ThemeContext'
 import { UserProvider } from './UserContext'
+import UserRegistrationForm from './UserRegistrationForm'
 
 function Dashboard() {
   const { theme, themeValues } = useContext(ThemeContext)
@@ -49,6 +50,7 @@ function Dashboard() {
         <ShoppingListWithImmer />
         <DogQueryExplorer />
         <CrudQueryExplorer />
+        <UserRegistrationForm />
       </div>
       <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         <Link to="/blog" className="blog-entry-link">Open Blog App →</Link>

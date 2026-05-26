@@ -12,6 +12,7 @@ It so far demonstrates:
 - full CRUD server-state management with TanStack Query (`ManagingBlogPostTanStack`)
 - multi-page routing with React Router, persistent layout via `<Outlet />`, dynamic routes, and programmatic navigation (`Blog App`)
 - file-based style routing with React Router, dynamic recipe detail pages via `useParams`, and a persistent nav layout (`Recipe Gallery`)
+- uncontrolled, ref-based form architecture with client-side validation, localStorage draft caching, and async submission lifecycle (`UserRegistrationForm`)
 
 Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHealthRecordSymmetric):
 - `isHealthRecordSymmetric` checks whether a singly linked list of patient health metrics forms a palindrome.
@@ -180,6 +181,20 @@ Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHeal
 - Visiting `/recipes/recipe/999` (a non-existent ID) shows a "Recipe Not Found" message with a back button and does not crash.
 - Visiting `/recipes/recipe/abc` (a non-numeric ID) shows the "Recipe Not Found" fallback since `Number("abc")` is `NaN` and `.find()` returns `undefined`.
 - Navigating directly to `/recipes` renders the Home welcome page with a "Browse Recipes →" link, confirming the index route is correctly configured.
+
+---
+
+### User Registration Form with React Hook Form
+
+##### Normal cases (3)
+- Filling all fields with valid data enables the submit button, shows "Registering..." for 2 seconds, then displays a success banner and resets every field to its default empty value.
+- Typing a valid email like `user@example.com` shows no error; changing it to `notanemail` immediately shows the email validation error in real time due to `mode: 'onChange'`.
+- Selecting a role from the dropdown clears the role error; resetting the dropdown back to "Select a role..." re-triggers the required error without submitting.
+
+##### Edge cases (3)
+- Submitting with the Full Name field containing only whitespace (e.g. `"   "`) triggers the `minLength` error because the field value does not meet the 3-character minimum after React Hook Form evaluates it.
+- Entering a matching confirm password then changing the primary password to something different immediately re-triggers the mismatch error on the confirm field via the live `watch` cross-reference.
+- Refreshing the page mid-form preserves all previously typed values because the `useEffect` + `watch` subscription continuously writes to `localStorage` and the mount effect rehydrates via `setValue`.
 
 ---
 
