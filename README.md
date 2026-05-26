@@ -13,6 +13,7 @@ It so far demonstrates:
 - multi-page routing with React Router, persistent layout via `<Outlet />`, dynamic routes, and programmatic navigation (`Blog App`)
 - file-based style routing with React Router, dynamic recipe detail pages via `useParams`, and a persistent nav layout (`Recipe Gallery`)
 - uncontrolled, ref-based form architecture with client-side validation, localStorage draft caching, and async submission lifecycle (`UserRegistrationForm`)
+- server-state form integration combining React Hook Form with TanStack Query for `useQuery` seeding, `useMutation` PUT updates, cache invalidation, `isDirty` gating, and server-error field mapping (`ProfileFormTanStack`)
 
 Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHealthRecordSymmetric):
 - `isHealthRecordSymmetric` checks whether a singly linked list of patient health metrics forms a palindrome.
@@ -238,5 +239,19 @@ Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHeal
 - An empty list (`None` head) returns `True` — trivially symmetric.
 - A single-node list returns `True` — one value is always a palindrome.
 - Two different values `[75, 80]` returns `False`; two equal values `[75, 75]` returns `True`.
+
+---
+
+### Profile Form — RHF + TanStack Query
+
+##### Normal cases (3)
+- On mount, all four fields (username, email, bio, notifications checkbox) are pre-populated with the values returned from `GET /profile`, and the Save button is disabled because `isDirty` is false.
+- Changing any field value enables the Save button; clicking Save sends a `PUT /profile` with the full payload, shows "Saving..." during the 2-second request, then re-disables the button and shows the success banner once the server responds.
+- After a successful save, editing the email field back to its original server value returns `isDirty` to false and re-disables the Save button, confirming that `reset(updatedData)` correctly resets the dirty baseline to the latest server state.
+
+##### Edge cases (3)
+- Entering `conflict@example.com` in the email field and clicking Save triggers the simulated 409 rejection, which surfaces an inline error message on the email field via `setError` without resetting or clearing any other field.
+- If JSON Server is not running, `useQuery` enters an error state and the form renders the error banner ("Could not reach the mock API") instead of showing empty broken inputs.
+- Toggling the notifications checkbox on and off in sequence — returning it to its original server value — correctly reflects `isDirty: false` and re-disables the Save button, confirming boolean field dirty-tracking works correctly.
 
 ---

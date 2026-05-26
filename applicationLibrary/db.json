@@ -1,0 +1,9 @@
+{
+  "profile": {
+    "id": 1,
+    "username": "janedoe",
+    "email": "jane.doe@example.com",
+    "bio": "Full-stack developer who loves building great user experiences.",
+    "notifications": true
+  }
+}

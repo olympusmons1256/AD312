@@ -1067,3 +1067,136 @@ button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
+
+/* ── Profile Form × TanStack Query ─────────────────────────────── */
+.profile-tanstack-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-subtitle {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: -8px 0 4px;
+}
+
+.pts-status {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.pts-status--loading {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.pts-status--error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.pts-status--error code {
+  background: #fee2e2;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.pts-status--success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+
+.pts-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pts-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pts-field label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.pts-field input[type='text'],
+.pts-field input[type='email'],
+.pts-field textarea {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  width: 100%;
+  resize: vertical;
+}
+
+.pts-field input:focus,
+.pts-field textarea:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.pts-field--checkbox {
+  flex-direction: row;
+}
+
+.pts-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+}
+
+.pts-checkbox-label input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: #6366f1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pts-error {
+  font-size: 0.78rem;
+  color: #dc2626;
+}
+
+.pts-submit-btn {
+  padding: 11px;
+  background: #6366f1;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+  align-self: flex-start;
+  min-width: 140px;
+}
+
+.pts-submit-btn:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+.pts-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
