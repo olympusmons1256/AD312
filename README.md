@@ -15,6 +15,7 @@ It so far demonstrates:
 - uncontrolled, ref-based form architecture with client-side validation, localStorage draft caching, and async submission lifecycle (`UserRegistrationForm`)
 - server-state form integration combining React Hook Form with TanStack Query for `useQuery` seeding, `useMutation` PUT updates, cache invalidation, `isDirty` gating, and server-error field mapping (`ProfileFormTanStack`)
 - integrating a vanilla Chart.js bar chart into the React lifecycle using `useEffect` as an escape hatch: imperative instantiation via `canvasRef`, real-time state synchronization via `.update()`, and mandatory cleanup via `.destroy()` to prevent canvas context errors (`PollDashboard`)
+- synchronizing React state with a browser-native side effect using `useEffect`: attaching a `resize` event listener on mount, updating `windowSize` state in real-time, and returning a cleanup function to remove the listener on unmount (`ResponsiveCard`)
 
 Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHealthRecordSymmetric):
 - `isHealthRecordSymmetric` checks whether a singly linked list of patient health metrics forms a palindrome.
@@ -254,6 +255,26 @@ Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHeal
 - Voting for the same framework many times in rapid succession keeps the chart in sync — no stale renders or duplicate chart instances are created because the effect branches on `chartInstanceRef.current` rather than always constructing a new `Chart()`.
 - If the component unmounts and remounts (e.g., navigating away and back), the cleanup `.destroy()` call prevents the "Canvas is already in use" error that would occur if the old instance were left alive on the same canvas node.
 - Resetting immediately after a vote (two state updates in quick succession) does not leave the chart in an inconsistent visual state, because each effect run either creates or synchronizes the single shared instance.
+
+---
+
+### Responsive Card (useEffect + window resize)
+- `ResponsiveCard` uses `useEffect` with an empty dependency array `[]` to register a single `resize` event listener on `window` when the component mounts.
+- The `handleResize` handler calls `setWindowSize` with the current `window.innerWidth` and `window.innerHeight`, keeping the displayed dimensions in sync with the real viewport.
+- The effect returns a cleanup function that calls `window.removeEventListener` to detach the handler on unmount, preventing stale state updates and memory leaks.
+- The card switches layout direction (`row` ↔ `column`) and background color when crossing the 768px mobile/desktop breakpoint.
+
+#### Test Cases
+
+##### Normal cases (3)
+- On initial render, the card displays the correct current `window.innerWidth` and `window.innerHeight` values without requiring a resize event.
+- Resizing the browser window above 768px shows the Desktop label with a horizontal (`row`) layout and cyan background; resizing below 768px switches to the Mobile label, vertical (`column`) layout, and indigo background.
+- The displayed width and height values update continuously and accurately as the window is dragged to different sizes, confirming the `resize` listener fires on every dimension change.
+
+##### Edge cases (3)
+- The event listener is registered exactly once regardless of how many times React re-renders the component, because the empty `[]` dependency array ensures the effect runs only on mount — not on every state update triggered by `setWindowSize`.
+- When the component unmounts (e.g., if conditionally removed from the tree), the cleanup function fires and removes the `resize` listener, so no further `setWindowSize` calls occur and no "Can't perform a React state update on an unmounted component" warning is triggered.
+- Resizing the window to exactly 768px (the breakpoint boundary) displays the Mobile layout since the condition is `width < 768`, confirming strict less-than boundary behavior.
 
 ---
 
