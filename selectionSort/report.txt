@@ -1,0 +1,28 @@
+solution.py contains two functions: selection_sort(arr), which sorts integers
+in ascending order, and selection_sort_descending(arr), which sorts in descending
+order. Both operate in-place by dividing the list into a growing sorted region
+[0, i) and a shrinking unsorted region [i, n). Each pass finds the minimum (or
+maximum) of the unsorted region and swaps it into position i. The only change
+between the two functions is the comparison operator (< vs >).
+
+TEST CASES — all 6 pass (python3 -m unittest test_solution -v)
+  1. test_random_array               — 20-element seeded list matches sorted(). PASS
+  2. test_already_sorted             — [1..10] input returns unchanged.          PASS
+  3. test_reverse_sorted             — [10..1] correctly becomes [1..10].        PASS
+  4. test_basic_descending           — unsorted list matches sorted(reverse=True).PASS
+  5. test_already_descending         — [9,7,5,3,1] returns unchanged.            PASS
+  6. test_ascending_input_desc_sort  — [1..7] becomes [7..1].                    PASS
+
+COMPLEXITY ANALYSIS
+Time: O(n²). The nested loops produce (n-1)+(n-2)+…+1 = n(n-1)/2 comparisons in
+all cases — the algorithm never exits early, even on a sorted input.
+Space: O(1). Sorting happens in-place with only a fixed number of auxiliary
+variables; no additional data structure proportional to n is allocated.
+
+ENHANCEMENTS AND STABILITY
+Enhancement: descending sort required only swapping the < operator for >,
+tracking the maximum element per pass instead of the minimum.
+Stability: Selection Sort is NOT stable. A long-distance swap can skip over
+equal elements — e.g., [3a, 3b, 1] becomes [1, 3b, 3a], reversing the original
+order of the two 3s. Stability could be achieved by shifting elements instead of
+swapping, but at the cost of more writes per pass (still O(n²) overall).
