@@ -14,6 +14,7 @@ It so far demonstrates:
 - file-based style routing with React Router, dynamic recipe detail pages via `useParams`, and a persistent nav layout (`Recipe Gallery`)
 - uncontrolled, ref-based form architecture with client-side validation, localStorage draft caching, and async submission lifecycle (`UserRegistrationForm`)
 - server-state form integration combining React Hook Form with TanStack Query for `useQuery` seeding, `useMutation` PUT updates, cache invalidation, `isDirty` gating, and server-error field mapping (`ProfileFormTanStack`)
+- integrating a vanilla Chart.js bar chart into the React lifecycle using `useEffect` as an escape hatch: imperative instantiation via `canvasRef`, real-time state synchronization via `.update()`, and mandatory cleanup via `.destroy()` to prevent canvas context errors (`PollDashboard`)
 
 Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHealthRecordSymmetric):
 - `isHealthRecordSymmetric` checks whether a singly linked list of patient health metrics forms a palindrome.
@@ -239,6 +240,20 @@ Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHeal
 - An empty list (`None` head) returns `True` — trivially symmetric.
 - A single-node list returns `True` — one value is always a palindrome.
 - Two different values `[75, 80]` returns `False`; two equal values `[75, 75]` returns `True`.
+
+---
+
+### Dynamic Poll Dashboard (Chart.js + useEffect)
+
+##### Normal cases (3)
+- Clicking the React vote button once increments the React bar by exactly 1 and updates the vote count label in the button without affecting any other framework's bar.
+- Voting for multiple frameworks in sequence produces a bar chart where each bar height corresponds precisely to that framework's vote count, verified visually and by the counter labels on each button.
+- Clicking Reset returns all vote counts to 0 and renders all bars at the baseline, confirming that the chart's `.update()` method correctly repaints on a full state reset.
+
+##### Edge cases (3)
+- Voting for the same framework many times in rapid succession keeps the chart in sync — no stale renders or duplicate chart instances are created because the effect branches on `chartInstanceRef.current` rather than always constructing a new `Chart()`.
+- If the component unmounts and remounts (e.g., navigating away and back), the cleanup `.destroy()` call prevents the "Canvas is already in use" error that would occur if the old instance were left alive on the same canvas node.
+- Resetting immediately after a vote (two state updates in quick succession) does not leave the chart in an inconsistent visual state, because each effect run either creates or synchronizes the single shared instance.
 
 ---
 

@@ -21,6 +21,7 @@ import { ThemeContext } from './ThemeContext'
 import { UserProvider } from './UserContext'
 import UserRegistrationForm from './UserRegistrationForm'
 import ProfileFormTanStack from './ProfileFormTanStack'
+import PollDashboard from './PollDashboard'
 
 function Dashboard() {
   const { theme, themeValues } = useContext(ThemeContext)
@@ -53,6 +54,7 @@ function Dashboard() {
         <CrudQueryExplorer />
         <UserRegistrationForm />
         <ProfileFormTanStack />
+        <PollDashboard />
       </div>
       <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         <Link to="/blog" className="blog-entry-link">Open Blog App →</Link>
