@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import Counter from './Counter'
 import Gallery from './Gallery'
@@ -26,6 +26,7 @@ import ResponsiveCard from './ResponsiveCard'
 
 function Dashboard() {
   const { theme, themeValues } = useContext(ThemeContext)
+  const [showCard, setShowCard] = useState(true)
   return (
     <main
       className={`app-shell ${theme === 'dark' ? 'dark-mode' : 'light-mode'}`}
@@ -56,7 +57,13 @@ function Dashboard() {
         <UserRegistrationForm />
         <ProfileFormTanStack />
         <PollDashboard />
-        <ResponsiveCard />
+        <button
+          onClick={() => setShowCard((s) => !s)}
+          style={{ margin: '0.5rem 0', padding: '0.4rem 1rem', cursor: 'pointer' }}
+        >
+          {showCard ? 'Unmount' : 'Mount'} ResponsiveCard
+        </button>
+        {showCard && <ResponsiveCard />}
       </div>
       <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         <Link to="/blog" className="blog-entry-link">Open Blog App →</Link>

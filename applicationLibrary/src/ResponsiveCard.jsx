@@ -11,6 +11,8 @@ export default function ResponsiveCard() {
   const isMobile = windowSize.width < MOBILE_BREAKPOINT
 
   useEffect(() => {
+    console.log('Effect ran — registering resize listener')
+
     // Handler reads the current window dimensions and pushes them into state,
     // keeping the component in sync with the real browser environment.
     function handleResize() {
@@ -30,6 +32,7 @@ export default function ResponsiveCard() {
     // every render, creating duplicate listeners. Omitting the array entirely
     // would do the same, re-registering on every render and causing a memory leak.
     return () => {
+      console.log('Cleanup ran — removing resize listener')
       // Cleanup: remove the event listener when the component unmounts so the
       // handler is never called against an unmounted component, preventing
       // state updates on dead components and freeing the listener from memory.

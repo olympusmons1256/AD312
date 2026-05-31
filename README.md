@@ -259,12 +259,6 @@ Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHeal
 ---
 
 ### Responsive Card (useEffect + window resize)
-- `ResponsiveCard` uses `useEffect` with an empty dependency array `[]` to register a single `resize` event listener on `window` when the component mounts.
-- The `handleResize` handler calls `setWindowSize` with the current `window.innerWidth` and `window.innerHeight`, keeping the displayed dimensions in sync with the real viewport.
-- The effect returns a cleanup function that calls `window.removeEventListener` to detach the handler on unmount, preventing stale state updates and memory leaks.
-- The card switches layout direction (`row` ↔ `column`) and background color when crossing the 768px mobile/desktop breakpoint.
-
-#### Test Cases
 
 ##### Normal cases (3)
 - On initial render, the card displays the correct current `window.innerWidth` and `window.innerHeight` values without requiring a resize event.
