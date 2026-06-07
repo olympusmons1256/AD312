@@ -23,6 +23,7 @@ import UserRegistrationForm from './UserRegistrationForm'
 import ProfileFormTanStack from './ProfileFormTanStack'
 import PollDashboard from './PollDashboard'
 import ResponsiveCard from './ResponsiveCard'
+import StreamingLayout from './StreamingLayout'
 
 function Dashboard() {
   const { theme, themeValues } = useContext(ThemeContext)
@@ -64,6 +65,7 @@ function Dashboard() {
           {showCard ? 'Unmount' : 'Mount'} ResponsiveCard
         </button>
         {showCard && <ResponsiveCard />}
+        <StreamingLayout />
       </div>
       <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         <Link to="/blog" className="blog-entry-link">Open Blog App →</Link>
