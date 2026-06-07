@@ -16,6 +16,8 @@ It so far demonstrates:
 - server-state form integration combining React Hook Form with TanStack Query for `useQuery` seeding, `useMutation` PUT updates, cache invalidation, `isDirty` gating, and server-error field mapping (`ProfileFormTanStack`)
 - integrating a vanilla Chart.js bar chart into the React lifecycle using `useEffect` as an escape hatch: imperative instantiation via `canvasRef`, real-time state synchronization via `.update()`, and mandatory cleanup via `.destroy()` to prevent canvas context errors (`PollDashboard`)
 - synchronizing React state with a browser-native side effect using `useEffect`: attaching a `resize` event listener on mount, updating `windowSize` state in real-time, and returning a cleanup function to remove the listener on unmount (`ResponsiveCard`)
+- building a reusable `useWindowSize` custom hook that encapsulates the resize-listener lifecycle and exposes a live `{ width, height }` object to any consumer, powering a streaming-site layout that switches between a compact mobile view and a full desktop view at a 768px breakpoint (`StreamingLayout`)
+- building a `useLocalStorage` custom hook that wraps `useState` with a lazy initializer to read from `localStorage` on first render and a `useEffect` to write back on every state change, allowing user preferences (theme, font size, language, autoplay) to survive page refreshes (`ThemePreferenceDemo`)
 
 Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHealthRecordSymmetric):
 - `isHealthRecordSymmetric` checks whether a singly linked list of patient health metrics forms a palindrome.
@@ -271,6 +273,19 @@ Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHeal
 - Resizing the window to exactly 768px (the breakpoint boundary) displays the Mobile layout since the condition is `width < 768`, confirming strict less-than boundary behavior.
 
 ---
+
+### Theme Preferences — useLocalStorage
+
+##### Normal cases (3)
+- Selecting a different theme (e.g., Dark) immediately re-renders the settings panel with the new colors and writes `"dark"` to `localStorage` under `pref-theme`, visible in DevTools → Application → Local Storage.
+- Changing font size to Large and refreshing the page reloads the component with the Large setting already applied, confirming the lazy initializer correctly reads and parses the stored value on first render.
+- Toggling Autoplay off stores `false` in `localStorage`; the localStorage inspector panel in the UI updates in real time to show `pref-autoplay: false`.
+
+##### Edge cases (3)
+- Clicking Reset to defaults calls all four setters with their original values, which overwrites all four `localStorage` keys and restores the panel to the Light / Medium / English / On state in a single render cycle.
+- If `localStorage` contains a manually corrupted value for a key (e.g., `pref-autoplay` set to the raw string `notjson`), the `try/catch` inside the lazy initializer catches the `JSON.parse` error and falls back to the provided `initialValue` so the component renders safely without crashing.
+- Calling `setTheme` with the same value already in state does not produce a redundant `localStorage.setItem` write that bypasses React's bailout, because `useEffect` only runs when `storedValue` actually changes — React skips re-renders when the new state is identical to the current state.
+
 
 ### Profile Form — RHF + TanStack Query
 
