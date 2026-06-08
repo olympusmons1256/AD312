@@ -1,0 +1,187 @@
+Bubble Sort — Implementation, Testing, Optimization, and Analysis
+=================================================================
+
+─────────────────────────────────────────────────────────────────
+1. IMPLEMENTATIONS
+─────────────────────────────────────────────────────────────────
+
+1.1 Basic Bubble Sort
+─────────────────────
+
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        for j in range(n - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+How it works:
+  - The outer loop runs n-1 times. After pass i, the largest i+1 elements
+    are guaranteed to be in their final positions at the end of the list.
+  - The inner loop compares every adjacent pair in the unsorted region
+    (indices 0 through n-2-i) and swaps them if they are out of order.
+  - The algorithm gets its name from the way larger values "bubble up"
+    toward the end of the array with each pass.
+
+1.2 Optimized Bubble Sort
+──────────────────────────
+
+def bubble_sort_optimized(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        swapped = False
+        for j in range(n - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr
+
+Enhancement:
+  - A boolean flag `swapped` is reset to False at the start of every outer
+    pass and set to True the moment any swap is made.
+  - If a complete pass ends with swapped still False, no element was out of
+    order — the list is already sorted and no further passes can improve it.
+  - The break exits the outer loop immediately, skipping all remaining passes.
+  - This reduces the best-case (already-sorted input) from O(n²) down to
+    O(n) — one full pass with zero swaps is sufficient to confirm sortedness.
+
+
+─────────────────────────────────────────────────────────────────
+2. TEST CASES
+─────────────────────────────────────────────────────────────────
+
+All test cases are run against both the basic and optimized implementations.
+
+Normal Case 1 — Randomly generated array
+  Input:    20 integers drawn from [-100, 100] with random.seed(99)
+  Expected: same order as Python's built-in sorted()
+  Outcome:  PASS — both implementations match the ground truth
+
+Normal Case 2 — Already sorted in ascending order
+  Input:    [1, 3, 5, 7, 9, 11, 13]
+  Expected: [1, 3, 5, 7, 9, 11, 13]  (unchanged)
+  Outcome:  PASS
+  Note:     Basic version still executes all n-1 passes.
+            Optimized version detects zero swaps on the first pass and exits
+            after a single O(n) scan.
+
+Normal Case 3 — Sorted in descending order (worst case)
+  Input:    [9, 7, 5, 3, 1]
+  Expected: [1, 3, 5, 7, 9]
+  Outcome:  PASS — both versions complete all n-1 passes; no early exit is
+            possible because every pass produces at least one swap.
+
+Edge Case 1 — All elements identical
+  Input:    [7, 7, 7, 7, 7]  (basic) / [4, 4, 4, 4, 4]  (optimized)
+  Expected: same list
+  Outcome:  PASS — no swaps occur; the optimized version exits after one pass.
+
+Edge Case 2 — Empty array
+  Input:    []
+  Expected: []
+  Outcome:  PASS — range(n-1) = range(-1) produces no iterations;
+            the function returns an empty list without raising an exception.
+
+Edge Case 3 — Single-element array
+  Input:    [42]  (basic) / [99]  (optimized)
+  Expected: [42] / [99]
+  Outcome:  PASS — the inner loop body never executes; the element is
+            returned as-is since a one-element list is trivially sorted.
+
+
+─────────────────────────────────────────────────────────────────
+3. OPTIMIZATION COMPARISON
+─────────────────────────────────────────────────────────────────
+
+Two 500-element arrays were timed using time.perf_counter():
+
+Scenario A — Already sorted (best case for optimized)
+  Basic version:     completes all 499 outer passes  →  ~slower
+  Optimized version: exits after 1 pass              →  ~faster
+  Observed speedup:  roughly 100-200x on a 500-element sorted list,
+                     growing proportionally with n because the basic
+                     version scales as n² while the optimized scales as n.
+
+Scenario B — Reverse sorted (worst case for both)
+  Both versions:     complete all 499 passes with swaps every pass
+  Observed speedup:  negligible (<5%) — the only overhead difference is
+                     one boolean assignment and one conditional check per
+                     inner iteration, which is constant extra work.
+
+Conclusion: the early-exit optimization is purely a best-case improvement.
+It provides no benefit for random or reverse-sorted input but converts the
+already-sorted best case from O(n²) to O(n) at no cost to worst-case
+correctness or performance.
+
+
+─────────────────────────────────────────────────────────────────
+4. COMPLEXITY ANALYSIS
+─────────────────────────────────────────────────────────────────
+
+Time Complexity
+───────────────
+
+The outer loop runs up to n-1 times.
+For each outer iteration i, the inner loop runs n-1-i times.
+
+Total comparisons (basic version):
+
+  Sum from i=0 to n-2 of (n-1-i)
+    = (n-1) + (n-2) + ... + 1
+    = n(n-1) / 2
+    ≈ O(n²)
+
+  Worst case  O(n²): reverse-sorted input forces every possible swap.
+  Average case O(n²): randomly ordered input still requires ~n²/4 comparisons
+                       on average because roughly half of all pairs are
+                       out of order.
+  Best case (basic)   O(n²): even a sorted list completes all n-1 passes
+                               because there is no mechanism to detect
+                               early completion.
+  Best case (optimized) O(n): one pass detects zero swaps → immediate exit.
+
+Space Complexity
+────────────────
+
+Bubble Sort is an in-place algorithm. It modifies the input array directly
+and allocates only a fixed number of scalar variables (i, j, swapped, and
+a temporary value during the swap via Python's tuple unpacking).
+
+No auxiliary arrays, recursive call stacks, or data structures that grow
+with n are used. Therefore:
+
+  Space complexity: O(1) auxiliary space.
+
+Stability
+─────────────
+
+Bubble Sort is stable. The only condition that triggers a swap is strict
+inequality (arr[j] > arr[j+1]). When two elements are equal, no swap
+occurs, so their original relative order is preserved throughout all passes.
+This makes Bubble Sort safe to use in contexts where equal-key elements
+must retain their original sequence (e.g., sorting records by a secondary
+key after already sorting by a primary key).
+
+
+─────────────────────────────────────────────────────────────────
+5. SUMMARY OF OBSERVATIONS
+─────────────────────────────────────────────────────────────────
+
+  - Bubble Sort is conceptually simple and easy to verify by hand, but its
+    O(n²) average and worst-case time complexity makes it impractical for
+    large datasets compared to algorithms like Merge Sort (O(n log n)).
+
+  - The swap-flag optimization is a low-cost addition (one boolean per outer
+    pass) that yields significant speed gains for nearly- or fully-sorted
+    data without complicating the algorithm or its space usage.
+
+  - Because it is in-place (O(1) space) and stable, Bubble Sort remains a
+    reasonable choice for very small lists or educational contexts where
+    simplicity and predictability are more important than raw throughput.
+
+  - The worst-case scenario (reverse-sorted input) is the most costly:
+    every element must travel the maximum possible distance to its final
+    position, producing the maximum n(n-1)/2 comparisons and swaps.

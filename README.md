@@ -19,10 +19,17 @@ It so far demonstrates:
 - building a reusable `useWindowSize` custom hook that encapsulates the resize-listener lifecycle and exposes a live `{ width, height }` object to any consumer, powering a streaming-site layout that switches between a compact mobile view and a full desktop view at a 768px breakpoint (`StreamingLayout`)
 - building a `useLocalStorage` custom hook that wraps `useState` with a lazy initializer to read from `localStorage` on first render and a `useEffect` to write back on every state change, allowing user preferences (theme, font size, language, autoplay) to survive page refreshes (`ThemePreferenceDemo`)
 
-Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHealthRecordSymmetric):
+Also includes standalone Python algorithms:
+
+In [isHealthRecordSymmetric/](isHealthRecordSymmetric):
 - `isHealthRecordSymmetric` checks whether a singly linked list of patient health metrics forms a palindrome.
 - Uses slow/fast pointer midpoint detection and in-place second-half reversal for O(n) time and O(1) space.
 - The list is restored to its original order after the check.
+
+In [bubbleSort/](bubbleSort):
+- Implements a basic Bubble Sort and a swap-flag optimized Bubble Sort in Python.
+- Basic version always performs n-1 passes; optimized version exits early if a full pass produces no swaps, reducing the best case from O(n²) to O(n).
+- Both versions sort in ascending order in-place with O(1) auxiliary space.
 
 ---
 
@@ -300,3 +307,34 @@ Also includes a standalone Python algorithm in [isHealthRecordSymmetric/](isHeal
 - Toggling the notifications checkbox on and off in sequence — returning it to its original server value — correctly reflects `isDirty: false` and re-disables the Save button, confirming boolean field dirty-tracking works correctly.
 
 ---
+### Bubble Sort (Code-Interview)
+
+**Problem:** Sort an array of integers in ascending order using Bubble Sort. Implement both a basic version and an optimized version that exits early when no swaps occur during a pass.
+
+**Algorithm — Basic Bubble Sort:**
+1. Run n-1 outer passes over the array.
+2. In each pass, compare every adjacent pair in the unsorted region and swap if the left element is greater than the right.
+3. After pass i, the largest i+1 elements are guaranteed to be in their final positions at the end of the array.
+4. Continue until all passes are complete.
+
+**Algorithm — Optimized Bubble Sort (swap-flag early exit):**
+1. Same as basic, but track a `swapped` boolean flag reset to `False` at the start of each outer pass.
+2. Set `swapped = True` whenever a swap is made.
+3. After each full inner pass, if `swapped` is still `False`, the list is already sorted — break immediately.
+4. Reduces the best case (already-sorted input) from O(n²) to O(n).
+
+**Complexity:**
+- Time (basic): O(n²) average and worst case; O(n²) best case (no early exit).
+- Time (optimized): O(n²) average and worst case; O(n) best case (one scan with zero swaps).
+- Space: O(1) — sorting is performed in-place with only scalar loop variables.
+- Stability: Stable — equal elements are never swapped (strict `>` condition), preserving their original relative order.
+
+##### Normal cases (3)
+- A 20-element randomly generated array (seeded with `random.seed(99)`) is sorted correctly by both implementations, with the result matching Python's built-in `sorted()` as the ground truth.
+- An already-sorted ascending array `[1, 3, 5, 7, 9, 11, 13]` is returned unchanged by both versions; the optimized version exits after a single O(n) pass with zero swaps, while the basic version completes all n-1 passes.
+- A reverse-sorted array `[9, 7, 5, 3, 1]` (worst case) is correctly sorted to `[1, 3, 5, 7, 9]` by both versions; neither can exit early because every pass produces at least one swap.
+
+##### Edge cases (3)
+- An array of all identical elements `[7, 7, 7, 7, 7]` returns the same list unchanged; the optimized version detects zero swaps on the first pass and exits immediately via the early-exit flag.
+- An empty array `[]` returns `[]` without raising an exception, because `range(n-1)` evaluates to `range(-1)` which produces no iterations.
+- A single-element array `[42]` returns `[42]` immediately; the outer loop runs once but the inner loop range is empty, so no comparisons or swaps are ever made.
