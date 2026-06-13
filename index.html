@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telemetry Pipeline for logging (researching) SDK usage</title>
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <!-- Navigation Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <span class="font-mono font-bold text-lg text-indigo-600">Developer Portfolio</span>
+            <a href="https://github.com" target="_blank" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition">Practicum Workspace</a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-3xl mx-auto px-4 py-12">
+        <article class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-gray-200">
+            
+            <!-- Metadata -->
+            <header class="mb-8">
+                <span class="text-xs font-semibold tracking-wider text-indigo-600 uppercase bg-indigo-50 px-2.5 py-1 rounded-full">Architecture & Engineering</span>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mt-4 tracking-tight leading-tight">
+                    Building a Telemetry Pipeline
+                </h1>
+                <p class="text-sm text-gray-500 mt-4 font-medium">Technical Status Update • June 2026</p>
+            </header>
+
+            <!-- Project Overview -->
+            <section class="mb-8">
+                <h2 class="text-xl font-bold text-gray-900 border-b border-gray-100 pb-2 mb-3">Project Overview</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    I am building a centralized telemetry service designed to capture and analyze real-time lifecycle events from distributed client applications (10 SDKs being used in my research). The core goal is to have instant visibility into application performance, latencies, and errors. The system must process events smoothly without risking database degradation or affecting API performance during traffic spikes.
+                </p>
+            </section>
+
+            <!-- My Role -->
+            <section class="mb-8">
+                <h2 class="text-xl font-bold text-gray-900 border-b border-gray-100 pb-2 mb-3">My Role</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    As the architecture and backend developer of the package, my primary responsibility was designing the ingestion pipeline. I mapped the path data takes from the initial client event trigger down to the final time-series data storage.
+                </p>
+            </section>
+
+            <!-- Work Completed -->
+            <section class="mb-8">
+                <h2 class="text-xl font-bold text-gray-900 border-b border-gray-100 pb-2 mb-3">Work Completed</h2>
+                <ul class="space-y-2 mt-2">
+                    <li class="text-gray-600 leading-relaxed"><strong class="text-gray-900">Designed Layered Architecture:</strong> Drafted the system blueprint separating the ingestion gateway from physical database writes.</li>
+                    <li class="text-gray-600 leading-relaxed"><strong class="text-gray-900">Optimized Verification Middleware:</strong> Structured a token authorization system utilizing a local Redis caching layer with a 10-minute Time-To-Live (TTL) to bypass expensive downstream API queries.</li>
+                    <li class="text-gray-600 leading-relaxed"><strong class="text-gray-900">Configured Asynchronous Ingestion:</strong> Integrated a decoupled messaging queue system using RabbitMQ to ingest data immediately, returning a fast 202 Accepted response to the client.</li>
+                    <li class="text-gray-600 leading-relaxed"><strong class="text-gray-900">Structured Storage Schema:</strong> Defined the data layout inside PostgreSQL using the TimescaleDB extension to automatically partition telemetry logs into time-segmented chunks.</li>
+                </ul>
+            </section>
+
+            <!-- Challenges & Solutions -->
+            <section class="mb-8">
+                <h2 class="text-xl font-bold text-gray-900 border-b border-gray-100 pb-2 mb-3">Challenges & Solutions</h2>
+                <div class="bg-gray-50 border-l-4 border-indigo-500 p-4 my-4 rounded-r-lg">
+                    <p class="text-sm font-semibold text-gray-900 mb-1">The Challenge:</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-3">Directly writing high-frequency event payloads to a traditional relational database creates severe connection bottlenecks during sudden traffic spikes.</p>
+                    <p class="text-sm font-semibold text-gray-900 mb-1">The Solution:</p>
+                    <p class="text-gray-600 text-sm leading-relaxed">I implemented a strict decoupling strategy. Client-side SDKs buffer event packets locally before sending them. On the backend, RabbitMQ acts as a buffer zone, handling incoming pressure seamlessly while standalone background workers process entries at a stable rate.</p>
+                </div>
+            </section>
+
+            <!-- Key Learnings -->
+            <section class="mb-6">
+                <h2 class="text-xl font-bold text-gray-900 border-b border-gray-100 pb-2 mb-3">Key Learnings</h2>
+                <ul class="space-y-2 mt-2">
+                    <li class="text-gray-600 leading-relaxed"><strong class="text-gray-900">Time-Series Partitioning:</strong> I discovered how TimescaleDB hypertables maintain quick index speeds by keeping data segments small enough to fit within memory cache.</li>
+                    <li class="text-gray-600 leading-relaxed"><strong class="text-gray-900">System Resiliency:</strong> Working with message brokers reinforced the importance of Dead Letter Queues (DLQs) for isolating corrupt payloads and preventing data loss.</li>
+                </ul>
+            </section>
+
+        </article>
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="bg-gray-100 border-t border-gray-200 py-6 mt-12 text-center text-xs text-gray-500">
+        <p>&copy; AD312 & AD350 Practicum Technical Progress Report.</p>
+    </footer>
+
+</body>
+</html>
