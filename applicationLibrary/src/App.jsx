@@ -25,6 +25,7 @@ import PollDashboard from './PollDashboard'
 import ResponsiveCard from './ResponsiveCard'
 import StreamingLayout from './StreamingLayout'
 import ThemePreferenceDemo from './ThemePreferenceDemo'
+import ErrorBoundaryDemo from './ErrorBoundaryDemo'
 
 function Dashboard() {
   const { theme, themeValues } = useContext(ThemeContext)
@@ -68,6 +69,7 @@ function Dashboard() {
         {showCard && <ResponsiveCard />}
         <StreamingLayout />
         <ThemePreferenceDemo />
+        <ErrorBoundaryDemo />
       </div>
       <div style={{ textAlign: 'center', marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         <Link to="/blog" className="blog-entry-link">Open Blog App →</Link>
