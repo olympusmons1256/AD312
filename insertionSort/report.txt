@@ -1,0 +1,70 @@
+Insertion Sort — Short Report
+
+Objective
+Implement a stable Insertion Sort in Python, test it on multiple input types, and summarize performance and practical use.
+
+Part 1: Implementation and Testing
+Core function:
+
+def insertion_sort(arr):
+  for i in range(1, len(arr)):
+    current = arr[i]
+    j = i - 1
+    while j >= 0 and arr[j] > current:
+      arr[j + 1] = arr[j]
+      j -= 1
+    arr[j + 1] = current
+  return arr
+
+Stability:
+- The comparison uses `>` (not `>=`), so equal elements keep original order.
+
+Test categories used:
+- Small array
+- Large random array
+- Nearly sorted array
+- Reversed array
+- Tuple/object stability check
+
+Correctness was validated by comparing output to Python `sorted()` and with unit tests.
+
+Part 2: Analysis
+Best case (nearly sorted):
+- Few shifts are needed.
+- Runtime is close to $O(n)$.
+
+Worst case (reversed):
+- Each element shifts across most of the sorted region.
+- Runtime is $O(n^2)$, with about $\frac{n(n-1)}{2}$ comparisons/shifts.
+
+Average case (random arrays):
+- Repeated trials at multiple sizes show quadratic growth.
+- Runtime is $O(n^2)$.
+
+Space complexity:
+- In-place algorithm with constant auxiliary memory: $O(1)$.
+
+Stability demonstration:
+- Input: `[(3,'A'), (1,'B'), (2,'C'), (1,'D'), (2,'E'), (1,'F')]`
+- Sorted by key: `[(1,'B'), (1,'D'), (1,'F'), (2,'C'), (2,'E'), (3,'A')]`
+- Equal-key items keep order (`B`, `D`, `F`), confirming stability.
+
+Part 3: Reflection
+Efficiency:
+- Very good for small or nearly sorted inputs.
+- Poor for large random/reversed inputs compared with $O(n \log n)$ sorts.
+
+Comparison:
+- Bubble Sort: also $O(n^2)$, usually more swaps.
+- QuickSort/Merge Sort: generally faster on large datasets.
+
+Practical uses:
+- Small datasets
+- Nearly sorted data
+- Hybrid algorithms (e.g., TimSort) for small partitions
+
+Variation:
+- Binary insertion sort reduces comparisons via binary search, but shifting still keeps total runtime at $O(n^2)$.
+
+Conclusion
+Insertion Sort is simple, stable, and in-place. It is a strong choice for small or nearly sorted data, but not ideal for large unsorted inputs due to quadratic time growth.
