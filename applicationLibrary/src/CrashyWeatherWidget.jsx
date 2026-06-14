@@ -23,7 +23,7 @@ function CrashyWeatherWidget({ shouldCrash = false }) {
         backgroundColor: '#e3f2fd',
       }}
     >
-      <h3 style={{ marginTop: 0, color: '#1565c0' }}>🌤️ Weather Widget</h3>
+      <h3 style={{ marginTop: 0, color: '#1565c0' }}>Weather Widget</h3>
       <p>Current conditions: Sunny, 72°F</p>
       <p style={{ fontSize: '0.9em', color: '#666' }}>
         Next update in 5 minutes...

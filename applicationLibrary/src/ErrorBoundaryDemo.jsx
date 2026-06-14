@@ -11,7 +11,7 @@ import CrashyWeatherWidget from './CrashyWeatherWidget';
 function ErrorBoundaryDemo() {
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>🎯 Error Boundary Lab Demo</h1>
+      <h1>Error Boundary Lab Demo</h1>
       <p>
         This page demonstrates how Error Boundaries protect your app from crashing completely
         when a single component fails.
@@ -51,7 +51,7 @@ function ErrorBoundaryDemo() {
               backgroundColor: '#f1f8e9',
             }}
           >
-            <h3 style={{ marginTop: 0, color: '#2e7d32' }}>📊 Analytics</h3>
+            <h3 style={{ marginTop: 0, color: '#2e7d32' }}>Analytics</h3>
             <ul>
               <li>New followers: 42</li>
               <li>Engagement rate: 8.5%</li>
@@ -67,7 +67,7 @@ function ErrorBoundaryDemo() {
               marginTop: '16px',
             }}
           >
-            <h3 style={{ marginTop: 0, color: '#1565c0' }}>💬 Recent Messages</h3>
+            <h3 style={{ marginTop: 0, color: '#1565c0' }}>Recent Messages</h3>
             <p>You have 5 unread messages.</p>
             <button
               style={{

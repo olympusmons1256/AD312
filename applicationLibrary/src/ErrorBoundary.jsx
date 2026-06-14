@@ -44,7 +44,7 @@ class ErrorBoundary extends React.Component {
           }}
         >
           <h3 style={{ color: '#d32f2f', marginTop: 0 }}>
-            ⚠️ Component Error
+            Component Error
           </h3>
           <p style={{ color: '#b71c1c' }}>
             Sorry, this widget encountered an error and couldn't load.
